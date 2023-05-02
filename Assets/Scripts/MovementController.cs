@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Photon.Pun;
 public class MovementController : MonoBehaviour
 {
     Rigidbody rb;
@@ -12,15 +13,24 @@ public class MovementController : MonoBehaviour
     [SerializeField]
     float maxHeight = 200;
     bool first=true;
+    Quaternion firstRot;
+    Vector3 firstPos;
     void Start()
     {
+        if (!GetComponent<PhotonView>().IsMine)
+        {
+            this.enabled = false;
+        }
         rb = GetComponent<Rigidbody>();
         Time.timeScale = 0.5f;
+        firstRot = transform.rotation;
+        firstPos = transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
+
         if (Input.GetMouseButtonDown(0))
         {
             if (first)
@@ -62,7 +72,9 @@ public class MovementController : MonoBehaviour
         switch (collision.gameObject.tag)
         {
             case "Ground":
-                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                transform.position = firstPos;
+                transform.rotation = firstRot;
                 break;
         }
     }

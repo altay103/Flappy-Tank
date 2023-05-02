@@ -36,11 +36,11 @@ public class PlayerAnimController : MonoBehaviour
         }
             if (debugMode)
         {
-            Time.timeScale = 20;
+            //Time.timeScale = 20;
         }
         else
         {
-            Time.timeScale = 1;
+            //Time.timeScale = 1;
         }
         if (move)
         {
@@ -74,7 +74,7 @@ public class PlayerAnimController : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        switch (collision.gameObject.name)
+        switch (collision.gameObject.tag)
         {
             case "Ramp":
                 transform.DORotate(collision.transform.eulerAngles, 1f);
